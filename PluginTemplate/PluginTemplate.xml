@@ -1,6 +1,7 @@
 <vSCG>
   <Guideline Name="Example">
     <Description>Example description of this guideline</Description>
+    <EntityType>ESXi</EntityType>
     <FunctionGet>Get-vSCGGuidelineExample</FunctionGet>
     <FunctionSet>Set-vSCGGuidelineExample</FunctionSet>
     <RiskProfile>1</RiskProfile>
