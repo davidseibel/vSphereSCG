@@ -1,0 +1,8 @@
+1) Create XML doc from spreadsheet (1 person)
+2) Create individual get/set guideline functions (2-3 people)
+  - Target 3-4 guidelines across different object types (VM/Host/etc.)
+3) Create framework functions (2-3 people)
+  - Optional: Implement risk profile
+  - Optional: Enable/Disable guidelines functions
+4) Create presentation script/UI (2-3 people)
+5) Optional: Create custom plugin (1 person)
