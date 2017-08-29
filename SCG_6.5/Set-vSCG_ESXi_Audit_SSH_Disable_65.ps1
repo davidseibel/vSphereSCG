@@ -1,4 +1,4 @@
-function Get-vSCGGuidelineTemplate {
+﻿function Set-vSCG_ESXi_Audit_SSH_Disable_65 {
     <#
         .SYNOPSIS
             Gets the compliance status of a guideline from a set of objects.
@@ -22,36 +22,25 @@ function Get-vSCGGuidelineTemplate {
 
     BEGIN {
         $result = @()
-    }
+    } #END
 
     PROCESS {
-        foreach ($object in $InputObject) {
-            if ($object -is [inserttypehere]) {
+        foreach ($VMhost in $InputObject) {
+            $ServiceList = Get-VMHostService -VMhost $VMhost
+            $SSHservice = $ServiceList | Where-Object {$_.Key -eq "TSM-SSH"}
+            If ($SSHservice.Running -eq $true) {
                 # Commands to get the compliance here, store in variable $compliant
-                $compliant = 
+                $SSHservice | Stop-VMHostService -Confirm:$false
+            } #END if
 
-                # Write-Verbose "More info about why this object is not compliant"
-                $result += [PSCustomObject]@{
-                    Entity = $object
-                    Compliant = $compliant
-                }
-            } else {
-                throw "Unsupported object type!"
+            $result += [PSCustomObject]@{
+                    Entity = $VMhost
+                    Compliant = $null
             }
-        }
-    }
+        } #END foreach
+    } #END process
 
     END {
         return $result
-    }
+    } #END
 }
-
-
-
-# Standard input
-#  InputObject (an array of any object type, accept pipeline input)
-
-# Standard output
-#  Entity (VM/Host)
-#  Compliant (true/false)
-#  Verbose output for detailed non-compliance info

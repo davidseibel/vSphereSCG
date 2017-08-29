@@ -13,8 +13,19 @@
   <Guideline Name="ESXi.Audit-SSH-Disable">
     <Description>Ensure that the SSH default disablement has not been changed</Description>
     <EntityType>ESXi</EntityType>
-    <FunctionGet>Get-vSCG_Audit-SSH-Disable_65</FunctionGet>
-    <FunctionSet>Set-vSCG_Audit-SSH-Disable_65</FunctionSet>
+    <FunctionGet>Get-vSCG_ESXi_Audit_SSH_Disable_65</FunctionGet>
+    <FunctionSet>Set-vSCG_ESXi_Audit_SSH_Disable_65</FunctionSet>
+    <RiskProfile>1</RiskProfile>
+    <RiskProfile>2</RiskProfile>
+    <RiskProfile>3</RiskProfile>
+    <SiteSpecific>false</SiteSpecific>
+    <Enabled>true</Enabled>
+  </Guideline>
+  <Guideline Name="ESXi.disable-mob">
+    <Description>Disable Managed Object Browser (MOB)</Description>
+    <EntityType>ESXi</EntityType>
+    <FunctionGet>Get-vSCG_ESXi_Audit_MOB_Disable_65</FunctionGet>
+    <FunctionSet>Set-vSCG_ESXi_Audit_MOB_Disable_65</FunctionSet>
     <RiskProfile>1</RiskProfile>
     <RiskProfile>2</RiskProfile>
     <RiskProfile>3</RiskProfile>

@@ -24,7 +24,7 @@ function Resolve-vSCGCompliance {
       $InputObject
     )
 
-    BEGIN{
+    BEGIN {
         $Invocation = (Get-Variable MyInvocation -Scope 1).Value
         $path = "$(Split-Path $Invocation.MyCommand.Path)\SCG_6.5\SCG_6.5.xml"
         $xml = [xml](Get-Content $path)
@@ -36,14 +36,14 @@ function Resolve-vSCGCompliance {
                 if ($guideline.FunctionSet -ne "unsupported") {
                     # Call $guideline.FunctionSet
                     Invoke-Expression ('$object | ' + $guideline.FunctionSet)
-
                 } else {
                     Write-Warning "Guideline '$($guideline.Name)' cannot be resolved with this function!"
                 }
             }
         }
     }
-    END{
+
+    END {
 
     }
 }
