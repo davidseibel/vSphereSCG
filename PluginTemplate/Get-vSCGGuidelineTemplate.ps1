@@ -12,8 +12,38 @@ function Get-vSCGGuidelineTemplate {
         .NOTES
             Author(s):     : 2017 VMworld US Hackathon Team 1
             Date Created   : 08/25/2017
-            Date Modified  : 08/25/2017
-    #>
+            Date Modified  : 08/28/2017
+    #>    
+    [CmdletBinding()]
+    param(
+      [Parameter(Position = 0, ValueFromPipeline = $true)]
+      $InputObject
+    )
+
+    BEGIN {
+        $result = @()
+    }
+
+    PROCESS {
+        foreach ($object in $InputObject) {
+            if ($object -is [inserttypehere]) {
+                # Commands to get the compliance here, store in variable $compliant
+                $compliant = 
+
+                # Write-Verbose "More info about why this object is not compliant"
+                $result += [PSCustomObject]@{
+                    Entity = $object
+                    Compliant = $compliant
+                }
+            } else {
+                throw "Unsupported object type!"
+            }
+        }
+    }
+
+    END {
+        return $result
+    }
 }
 
 
