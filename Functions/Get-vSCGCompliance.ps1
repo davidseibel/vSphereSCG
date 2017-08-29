@@ -20,16 +20,35 @@ function Get-vSCGCompliance {
             Date Created   : 08/25/2017
             Date Modified  : 08/25/2017
     #>
-    $Invocation = (Get-Variable MyInvocation -Scope 1).Value
-    $path = "$(Split-Path $Invocation.MyCommand.Path)\SCG_6.5\SCG_6.5.xml"
-    $xml = [xml](Get-Content $path)
+      
+    [CmdletBinding()]
+    param(
+      [Parameter(Position = 0, ValueFromPipeline = $true)]
+      $InputObject
+    )
+
+    BEGIN {
+        $Invocation = (Get-Variable MyInvocation -Scope 1).Value
+        $path = "$(Split-Path $Invocation.MyCommand.Path)\SCG_6.5\SCG_6.5.xml"
+        $xml = [xml](Get-Content $path)
+
+        $result = @()
+    }
     
-    foreach ($guideline in $xml.vSCG.Guideline) {
-        if ($guideline.FunctionGet -ne "unsupported") {
-            # Call $guideline.FunctionGet
-        } else {
-            Write-Warning "Guideline '$($guideline.Name)' cannot be retrieved with this function!"
+    PROCESS {
+        foreach ($object in $InputObject) {
+            foreach ($guideline in $xml.vSCG.Guideline) {
+                if ($guideline.FunctionGet -ne "unsupported") {
+                    # Call $guideline.FunctionGet
+                } else {
+                    Write-Warning "Guideline '$($guideline.Name)' cannot be retrieved with this function!"
+                }
+            }
         }
+    }
+
+    END {
+        return $result
     }
 
 
