@@ -20,6 +20,18 @@ function Get-vSCGCompliance {
             Date Created   : 08/25/2017
             Date Modified  : 08/25/2017
     #>
+    $Invocation = (Get-Variable MyInvocation -Scope 1).Value
+    $path = "$(Split-Path $Invocation.MyCommand.Path)\SCG_6.5\SCG_6.5.xml"
+    $xml = [xml](Get-Content $path)
+    
+    foreach ($guideline in $xml.vSCG.Guideline) {
+        if ($guideline.FunctionGet -ne "unsupported") {
+            # Call $guideline.FunctionGet
+        } else {
+            Write-Warning "Guideline '$($guideline.Name)' cannot be retrieved with this function!"
+        }
+    }
+
 
     # Loop through input objects (VMs/hosts/etc.)
       # Loop through guidelines in XML
@@ -34,10 +46,11 @@ function Get-vSCGCompliance {
         # end if
 
     # End loop
+    
 }
 
 # Output
-  Entity (from child functions)
-  Compliant (from child functions)
-  Guideline name
-  Guideline description
+#  Entity (from child functions)
+#  Compliant (from child functions)
+#  Guideline name
+#  Guideline description
