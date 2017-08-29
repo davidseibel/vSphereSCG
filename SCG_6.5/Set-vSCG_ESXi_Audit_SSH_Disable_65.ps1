@@ -21,7 +21,6 @@
     )
 
     BEGIN {
-        $result = @()
     } #END
 
     PROCESS {
@@ -30,17 +29,11 @@
             $SSHservice = $ServiceList | Where-Object {$_.Key -eq "TSM-SSH"}
             If ($SSHservice.Running -eq $true) {
                 # Commands to get the compliance here, store in variable $compliant
-                $SSHservice | Stop-VMHostService -Confirm:$false
+                $SSHservice | Stop-VMHostService -Confirm:$false | Out-Null
             } #END if
-
-            $result += [PSCustomObject]@{
-                    Entity = $VMhost
-                    Compliant = $null
-            }
         } #END foreach
     } #END process
 
     END {
-        return $result
     } #END
 }

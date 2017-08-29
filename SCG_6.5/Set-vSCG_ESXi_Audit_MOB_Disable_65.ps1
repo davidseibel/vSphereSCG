@@ -21,24 +21,18 @@
     )
 
     BEGIN {
-        $result = @()
     } #END
 
     PROCESS {
         foreach ($VMhost in $InputObject) {        
-           $mob = $vmhost | Get-AdvancedSetting -Name Config.HostAgent.plugins.solo.enableMob
+            $mob = $vmhost | Get-AdvancedSetting -Name Config.HostAgent.plugins.solo.enableMob
 
             if($mob.Value -eq "true") {
-                $VMhost | Get-AdvancedSetting -Name Config.HostAgent.plugins.solo.enableMob | Set-AdvancedSetting -value "false"
-            }
-            $result += [PSCustomObject]@{
-                Entity = $vmhost
-                Compliant = $null
+                $VMhost | Get-AdvancedSetting -Name Config.HostAgent.plugins.solo.enableMob | Set-AdvancedSetting -value "false" | Out-Null
             }
         } #END foreach
     } #END process
 
     END {
-        return $result
     } #END
 }
