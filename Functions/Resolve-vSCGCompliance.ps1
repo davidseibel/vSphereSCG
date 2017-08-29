@@ -25,14 +25,12 @@ function Resolve-vSCGCompliance {
     )
 
     BEGIN {
-        $Invocation = (Get-Variable MyInvocation -Scope 1).Value
-        $path = "$(Split-Path $Invocation.MyCommand.Path)\SCG_6.5\SCG_6.5.xml"
-        $xml = [xml](Get-Content $path)
+        $guidelines = Get-vSCGGuideline | Where-Object {$_.Enabled}
     }
 
     PROCESS {
         foreach ($object in $InputObject) {
-            foreach ($guideline in $xml.vSCG.Guideline) {
+            foreach ($guideline in $guidelines) {                
                 if ($guideline.FunctionSet -ne "unsupported") {
                     # Call $guideline.FunctionSet
                     Invoke-Expression ('$object | ' + $guideline.FunctionSet)
